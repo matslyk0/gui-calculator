@@ -119,30 +119,50 @@ class Screen extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==decimal && !decimalPlaced) {
+            if (!result.isEmpty()) {
+                entry = result;
+                result = "";
+            }
             if (Helpers.endsWithOperation(entry)) entry += "0.";
             else entry += ".";
             decimalPlaced = true;
         }
 
         else if (e.getSource()==add) {
+            if (!result.isEmpty()) {
+                entry = result;
+                result = "";
+            }
             if (Helpers.endsWithOperation(entry)) entry = Helpers.cutLastChar(entry);
             entry += "+";
             decimalPlaced = false;
         }
 
         else if (e.getSource()==subtract) {
+            if (!result.isEmpty()) {
+                entry = result;
+                result = "";
+            }
             if (Helpers.endsWithOperation(entry)) entry = Helpers.cutLastChar(entry);
             entry += "-";
             decimalPlaced = false;
         }
 
         else if (e.getSource()==multiply) {
+            if (!result.isEmpty()) {
+                entry = result;
+                result = "";
+            }
             if (Helpers.endsWithOperation(entry)) entry = Helpers.cutLastChar(entry);
             entry += "×";
             decimalPlaced = false;
         }
 
         else if (e.getSource()==divide) {
+            if (!result.isEmpty()) {
+                entry = result;
+                result = "";
+            }
             if (Helpers.endsWithOperation(entry)) entry = Helpers.cutLastChar(entry);
             entry += "÷";
             decimalPlaced = false;
@@ -170,13 +190,10 @@ class Screen extends JFrame implements ActionListener {
             result = entry.replace('÷','/');
             result = result.replace('×','*');
             expression = new Expression(result);
-            try {
-                calculation = expression.evaluate();
-            } catch (EvaluationException | ParseException ex) { // null pointer exception?
-                System.out.println("something went wrong");
-            }
-            //guess: it doesn't calculate anything so result is empty right before the following are executed
-            result = calculation.getStringValue();
+            try {calculation = expression.evaluate();}
+            catch (EvaluationException | ParseException _) {}
+            try {result = calculation.getStringValue();}
+            catch (NullPointerException _) {}
             result = Helpers.rounder(result);
         }
 
@@ -188,9 +205,8 @@ class Screen extends JFrame implements ActionListener {
             if (!result.equals("0") && result.charAt(0)=='0') {
                 result = Helpers.cutFirstChar(result);
             }
-            resultBox.setText(result);
         }
-
+        resultBox.setText(result);
 
 
     }

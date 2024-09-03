@@ -22,12 +22,18 @@ public class Helpers {
     }
 
     static String rounder(String num) {
-        BigDecimal bdNum = new BigDecimal(num);
-        bdNum = bdNum.setScale(6,RoundingMode.HALF_UP);
-        String stringNum = bdNum.toString();
-        while (stringNum.endsWith("0")) stringNum = cutLastChar(stringNum);
-        if (stringNum.endsWith(".")) stringNum = cutLastChar(stringNum);
-        return stringNum;
+        try {
+            BigDecimal bdNum = new BigDecimal(num);
+            bdNum = bdNum.setScale(6,RoundingMode.HALF_UP);
+            String stringNum = bdNum.toString();
+            while (stringNum.endsWith("0")) stringNum = cutLastChar(stringNum);
+            if (stringNum.endsWith(".")) stringNum = cutLastChar(stringNum);
+            return stringNum;
+        }
+        catch (NumberFormatException | NullPointerException ex) {
+            return "";
+        }
+
     }
 }
 
