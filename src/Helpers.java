@@ -31,9 +31,13 @@ public class Helpers {
             return stringNum;
         }
         catch (NumberFormatException | NullPointerException ex) {
+            System.out.println("issue when rounding");
             return "";
         }
-
+        catch (Exception ex) {
+            System.out.println("Something went wrong: "+ex);
+            return "";
+        }
     }
 }
 

@@ -92,7 +92,6 @@ class Screen extends JFrame implements ActionListener {
         keys.setBackground(new Color(0x6F7378));
         for (JButton button : buttons) {keys.add(button);}
 
-        //fitting the pieces together
         constraints.gridx = 0;
         constraints.gridy = 0;
         constraints.weightx = 1;
@@ -168,32 +167,97 @@ class Screen extends JFrame implements ActionListener {
             decimalPlaced = false;
         }
 
-        else if (e.getSource()==zero) entry += "0";
-        else if (e.getSource()==one) entry += "1";
-        else if (e.getSource()==two) entry += "2";
-        else if (e.getSource()==three) entry += "3";
-        else if (e.getSource()==four) entry += "4";
-        else if (e.getSource()==five) entry += "5";
-        else if (e.getSource()==six) entry += "6";
-        else if (e.getSource()==seven) entry += "7";
-        else if (e.getSource()==eight) entry += "8";
-        else if (e.getSource()==nine) entry += "9";
+        else if (e.getSource()==zero) {
+            if (!result.isEmpty()) {
+                entry = "";
+                result = "";
+            }
+            entry += "0";
+        }
+        else if (e.getSource()==one) {
+            if (!result.isEmpty()) {
+                entry = "";
+                result = "";
+            }
+            entry += "1";
+        }
+        else if (e.getSource()==two) {
+            if (!result.isEmpty()) {
+                entry = "";
+                result = "";
+            }
+            entry += "2";
+        }
+        else if (e.getSource()==three) {
+            if (!result.isEmpty()) {
+                entry = "";
+                result = "";
+            }
+            entry += "3";
+        }
+        else if (e.getSource()==four) {
+            if (!result.isEmpty()) {
+                entry = "";
+                result = "";
+            }
+            entry += "4";
+        }
+        else if (e.getSource()==five) {
+            if (!result.isEmpty()) {
+                entry = "";
+                result = "";
+            }
+            entry += "5";
+        }
+        else if (e.getSource()==six) {
+            if (!result.isEmpty()) {
+                entry = "";
+                result = "";
+            }
+            entry += "6";
+        }
+        else if (e.getSource()==seven) {
+            if (!result.isEmpty()) {
+                entry = "";
+                result = "";
+            }
+            entry += "7";
+        }
+        else if (e.getSource()==eight) {
+            if (!result.isEmpty()) {
+                entry = "";
+                result = "";
+            }
+            entry += "8";
+        }
+        else if (e.getSource()==nine) {
+            if (!result.isEmpty()) {
+                entry = "";
+                result = "";
+            }
+            entry += "9";
+        }
 
         else if (e.getSource()==delete) {
             entry = Helpers.cutLastChar(entry);
             if (entry.isEmpty()) entry ="0";
         }
 
-        else if (e.getSource()==clear) entry ="0";
+        else if (e.getSource()==clear) {
+            entry ="0";
+            result = "";
+        }
 
         else if (e.getSource()==equals) {
             result = entry.replace('÷','/');
             result = result.replace('×','*');
             expression = new Expression(result);
             try {calculation = expression.evaluate();}
-            catch (EvaluationException | ParseException _) {}
+            catch (EvaluationException | ParseException ex) {System.out.println("issue with evaluation or parsing");}
+            catch (Exception ex) {System.out.println("Something went wrong: "+ex);}
             try {result = calculation.getStringValue();}
-            catch (NullPointerException _) {}
+            catch (NullPointerException ex) {System.out.println("issue with null pointer");}
+            catch (Exception ex) {System.out.println("Something went wrong: "+ex);}
             result = Helpers.rounder(result);
         }
 
@@ -207,7 +271,5 @@ class Screen extends JFrame implements ActionListener {
             }
         }
         resultBox.setText(result);
-
-
     }
 }
