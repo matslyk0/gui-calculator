@@ -1,12 +1,25 @@
 import java.util.Arrays;
 import java.util.List;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 public class Helpers {
 
     static String[] operationsArray = {"+","-","÷","×","."};
     static List<String> operations = Arrays.asList(operationsArray);
+    static DecimalFormat oneNine = new DecimalFormat("#.#########");
+    static DecimalFormat twoEight = new DecimalFormat("##.########");
+    static DecimalFormat threeSeven = new DecimalFormat("###.#######");
+    static DecimalFormat fourSix = new DecimalFormat("####.######");
+    static DecimalFormat fiveFive = new DecimalFormat("#####.#####");
+    static DecimalFormat sixFour = new DecimalFormat("######.####");
+    static DecimalFormat sevenThree = new DecimalFormat("#######.###");
+    static DecimalFormat eightTwo = new DecimalFormat("########.##");
+    static DecimalFormat nineOne = new DecimalFormat("#########.#");
+    static DecimalFormat tenZero = new DecimalFormat("##########");
+    static DecimalFormat[] formats = {
+            oneNine, twoEight, threeSeven, fourSix, fiveFive,
+            sixFour, sevenThree, eightTwo, nineOne, tenZero
+    };
 
     static char getLastChar(String text) {return text.charAt(text.length()-1);}
 
@@ -21,23 +34,14 @@ public class Helpers {
         return operations.contains(Character.toString(lastChar));
     }
 
-    static String rounder(String num) {
-        try {
-            BigDecimal bdNum = new BigDecimal(num);
-            bdNum = bdNum.setScale(6,RoundingMode.HALF_UP);
-            String stringNum = bdNum.toString();
-            while (stringNum.endsWith("0")) stringNum = cutLastChar(stringNum);
-            if (stringNum.endsWith(".")) stringNum = cutLastChar(stringNum);
-            return stringNum;
-        }
-        catch (NumberFormatException | NullPointerException ex) {
-            //System.out.println("issue when rounding");
-            return "";
-        }
-        catch (Exception ex) {
-            //System.out.println("Something unexpected went wrong: "+ex);
-            return "";
-        }
+    static String formatter(String num) {
+        //the number is rounded to a number of decimal places appropriate to the numbers size
+        //trailing zeros are automatically removed
+        int index = num.indexOf(".")-1;
+        Double numDouble = Double.parseDouble(num);
+        if (index==-2) return num;
+        return formats[index].format(numDouble);
+        //will improve readability
     }
 }
 

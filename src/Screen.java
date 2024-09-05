@@ -100,7 +100,6 @@ public class Screen extends JFrame implements ActionListener {
         constraints.gridheight = 2;
         constraints.fill = GridBagConstraints.BOTH;
         this.add(keys, constraints);
-
         this.getContentPane().setBackground(new Color(0x6F7378));
         this.setVisible(true);
     }
@@ -115,7 +114,7 @@ public class Screen extends JFrame implements ActionListener {
                 result = "";
             }
             entry += "(";
-            decimalPlaced = true;
+            decimalPlaced = false;
         }
 
         if (e.getSource()==rightParenthesis) {
@@ -124,7 +123,7 @@ public class Screen extends JFrame implements ActionListener {
                 result = "";
             }
             entry += ")";
-            decimalPlaced = true;
+            decimalPlaced = false;
         }
 
         if (e.getSource()==decimal && !decimalPlaced) {
@@ -256,6 +255,7 @@ public class Screen extends JFrame implements ActionListener {
         else if (e.getSource()==clear) {
             entry ="0";
             result = "";
+            decimalPlaced = false;
         }
 
         else if (e.getSource()==equals) {
@@ -276,19 +276,13 @@ public class Screen extends JFrame implements ActionListener {
             catch (Exception ex) {
                 System.out.println("Something unexpected went wrong: "+ex);
             }
-            result = Helpers.rounder(result);
+            result = Helpers.formatter(result);
+            decimalPlaced = false;
         }
 
-        //final checks
+        //final checks and updating
         if (!entry.equals("0") && entry.charAt(0)=='0') entry = Helpers.cutFirstChar(entry);
         if (Helpers.isOperation(entry.charAt(0)) && entry.charAt(0)!='-') entry = "0" + entry;
-        if (!result.isEmpty()) {
-            if (!result.equals("0") && result.charAt(0)=='0') {
-                result = Helpers.cutFirstChar(result);
-            }
-        }
-
-        //updating
         entryBox.setText(entry);
         resultBox.setText(result);
     }
