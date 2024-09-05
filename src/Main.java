@@ -24,8 +24,8 @@ class Screen extends JFrame implements ActionListener {
     EvaluationValue calculation;
     boolean decimalPlaced = false;
 
-    JButton filler1 = new JButton("[]");
-    JButton filler2 = new JButton("[]");
+    JButton leftParenthesis = new JButton("(");
+    JButton rightParenthesis = new JButton(")");
     JButton clear = new JButton("C");
     JButton delete = new JButton("DEL");
     JButton seven = new JButton("7");
@@ -54,7 +54,7 @@ class Screen extends JFrame implements ActionListener {
     Screen() {
 
         JButton[] buttons = {
-                filler1, filler2, clear, delete,
+                leftParenthesis, rightParenthesis, clear, delete,
                 seven, eight, nine, divide,
                 four, five, six, multiply,
                 one, two, three, add,
@@ -118,6 +118,24 @@ class Screen extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         //keymapping
+        if (e.getSource()==leftParenthesis) {
+            if (!result.isEmpty()) {
+                entry = result;
+                result = "";
+            }
+            entry += "(";
+            decimalPlaced = true;
+        }
+
+        if (e.getSource()==rightParenthesis) {
+            if (!result.isEmpty()) {
+                entry = result;
+                result = "";
+            }
+            entry += ")";
+            decimalPlaced = true;
+        }
+
         if (e.getSource()==decimal && !decimalPlaced) {
             if (!result.isEmpty()) {
                 entry = result;
