@@ -252,12 +252,20 @@ class Screen extends JFrame implements ActionListener {
             result = entry.replace('÷','/');
             result = result.replace('×','*');
             expression = new Expression(result);
-            try {calculation = expression.evaluate();}
-            catch (EvaluationException | ParseException ex) {System.out.println("issue with evaluation or parsing");}
-            catch (Exception ex) {System.out.println("Something went wrong: "+ex);}
-            try {result = calculation.getStringValue();}
-            catch (NullPointerException ex) {System.out.println("issue with null pointer");}
-            catch (Exception ex) {System.out.println("Something went wrong: "+ex);}
+
+            try {
+                calculation = expression.evaluate();
+                result = calculation.getStringValue();
+            }
+            catch (EvaluationException | ParseException ex) {
+                System.out.println("issue with evaluation or parsing");
+            }
+            catch (NullPointerException ex) {
+                System.out.println("issue with null pointer");
+            }
+            catch (Exception ex) {
+                System.out.println("Something went wrong: "+ex);
+            }
             result = Helpers.rounder(result);
         }
 
