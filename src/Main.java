@@ -117,6 +117,7 @@ class Screen extends JFrame implements ActionListener {
     //keymapping
     @Override
     public void actionPerformed(ActionEvent e) {
+        //keymapping
         if (e.getSource()==decimal && !decimalPlaced) {
             if (!result.isEmpty()) {
                 entry = result;
@@ -258,26 +259,28 @@ class Screen extends JFrame implements ActionListener {
                 result = calculation.getStringValue();
             }
             catch (EvaluationException | ParseException ex) {
-                System.out.println("issue with evaluation or parsing");
+                //System.out.println("issue with evaluation or parsing");
             }
             catch (NullPointerException ex) {
-                System.out.println("issue with null pointer");
+                //System.out.println("issue with null pointer");
             }
             catch (Exception ex) {
-                System.out.println("Something went wrong: "+ex);
+                System.out.println("Something unexpected went wrong: "+ex);
             }
             result = Helpers.rounder(result);
         }
 
+        //final checks
         if (!entry.equals("0") && entry.charAt(0)=='0') entry = Helpers.cutFirstChar(entry);
         if (Helpers.isOperation(entry.charAt(0)) && entry.charAt(0)!='-') entry = "0" + entry;
-        entryBox.setText(entry);
-
         if (!result.isEmpty()) {
             if (!result.equals("0") && result.charAt(0)=='0') {
                 result = Helpers.cutFirstChar(result);
             }
         }
+
+        //updating
+        entryBox.setText(entry);
         resultBox.setText(result);
     }
 }
